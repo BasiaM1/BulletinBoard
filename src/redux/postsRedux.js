@@ -1,6 +1,15 @@
 /* selectors */
 export const getAll = ({posts}) => posts.data;
 
+export const getPostById = ({posts}, postId) => {
+  if (posts.data.length > 0) {
+    const postData = posts.data.filter(post => post.id === postId);
+    return postData[ 0 ];
+  } else {
+    return {};
+  }
+};
+
 /* action name creator */
 const reducerName = 'posts';
 const createActionName = name => `app/${reducerName}/${name}`;
@@ -11,9 +20,9 @@ const FETCH_SUCCESS = createActionName('FETCH_SUCCESS');
 const FETCH_ERROR = createActionName('FETCH_ERROR');
 
 /* action creators */
-export const fetchStarted = payload => ({ payload, type: FETCH_START });
-export const fetchSuccess = payload => ({ payload, type: FETCH_SUCCESS });
-export const fetchError = payload => ({ payload, type: FETCH_ERROR });
+export const fetchStarted = payload => ({payload, type: FETCH_START});
+export const fetchSuccess = payload => ({payload, type: FETCH_SUCCESS});
+export const fetchError = payload => ({payload, type: FETCH_ERROR});
 
 /* thunk creators */
 

@@ -1,30 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Header} from '../Header/Header';
+
 import clsx from 'clsx';
 
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Container from '@material-ui/core/Container';
 // import { connect } from 'react-redux';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
-import styles from './MainLayout.module.scss';
+import styles from './MyPosts.module.scss';
 
 const Component = ({className, children}) => (
   <div className={clsx(className, styles.root)}>
-    < AppBar>
-      <Container maxWidth='lg'>
-        <Toolbar disableGutters>
-          <Header />
-        </Toolbar>
-      </Container>
-    </AppBar>
-    <Container maxWidth='lg'>
-      <Toolbar />
-      <Toolbar />
-      {children}
-    </Container>
+    <h2>MyPosts</h2>
+    {children}
   </div>
 );
 
@@ -44,7 +31,7 @@ Component.propTypes = {
 // const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 export {
-  Component as MainLayout,
-  // Container as MainLayout,
-  Component as MainLayoutComponent,
+  Component as MyPosts,
+  // Container as MyPosts,
+  Component as MyPostsComponent,
 };
