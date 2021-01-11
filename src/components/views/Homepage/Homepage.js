@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import Paper from '@material-ui/core/Paper';
 import Card from '@material-ui/core/Card';
@@ -11,35 +11,39 @@ import Typography from '@material-ui/core/Typography';
 
 import clsx from 'clsx';
 
-import {connect} from 'react-redux';
-import {getAll} from '../../../redux/postsRedux.js';
+import { connect } from 'react-redux';
+import { getAll } from '../../../redux/postsRedux.js';
 
 import styles from './Homepage.module.scss';
 
 class Component extends React.Component {
 
-  render() {
-    const {className, children, posts} = this.props;
+  render () {
+    const { className, children, posts } = this.props;
     return (
-      <Paper className={clsx(className, styles.root)}>
-        <h2>Adverts</h2>
-        <div className={styles.cardContainer}>
-          {posts.length ? posts.map(post => (
-            <Card className={styles.card} key={post.id} >
+      <Paper className={ clsx( className, styles.root ) }>
+        <h2>Bulletin Board</h2>
+        <div className={ styles.cardContainer }>
+          { posts.length ? posts.sort( ( post1, post2 ) => {
+            const date1 = new Date( post1.updated );
+            const date2 = new Date( post2.updated );
+            return date2.getTime() - date1.getTime();
+          } ).map( post => (
+            <Card className={ styles.card } key={ post.id } >
               <CardContent>
-                <Typography className={styles.title} color="textSecondary" gutterBottom>
-                  {post.publicationDate}
+                <Typography className={ styles.title } color="textSecondary" gutterBottom>
+                  { post.created }
                 </Typography>
                 <Typography variant="h6" component="h2">
-                  {post.title}
+                  { post.title }
                 </Typography>
-                <Button color={'primary'} fullWidth className={styles.button} component={Link} exact to={`/post/${post.id}`} >
+                <Button color={ 'primary' } fullWidth className={ styles.button } component={ Link } exact to={ `/post/${ post.id }` } >
                   Find Out More <ChevronRightRounded />
                 </Button>
               </CardContent>
             </Card>
-          )) : (<p>There are no adverts for this moment</p>)}
-          {children}
+          ) ) : ( <p>There are no texts for this moment</p> ) }
+          { children }
         </div>
       </Paper>
     );
@@ -51,14 +55,13 @@ Component.propTypes = {
   posts: PropTypes.array,
 };
 
-const mapStateToProps = state => ({
-  posts: getAll(state),
-});
+const mapStateToProps = state => ( {
+  posts: getAll( state ),
+} );
 
-const Container = connect(mapStateToProps)(Component);
+const Container = connect( mapStateToProps )( Component );
 
 export {
-  // Component as Homepage,
   Container as Homepage,
   Component as HomepageComponent,
 };

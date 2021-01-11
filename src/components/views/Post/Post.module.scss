@@ -13,16 +13,18 @@
 .avatar {
   background: $main;
 }
+.text {
+  max-width: 300px;
+  margin: 0 auto;
+}
+.content {
+  word-wrap: break-word;
+}
 .button {
   margin: 10px auto;
 }
 
 .table {
   margin: 0 auto;
-  max-width: 300px;
-}
-
-.photo {
-  margin: 10px auto;
   max-width: 300px;
 }
