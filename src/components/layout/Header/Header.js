@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { connect } from 'react-redux';
+import { getAllUsers } from '../../../redux/usersRedux';
 
-import {NavLink} from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 
@@ -11,35 +13,38 @@ import styles from './Header.module.scss';
 class Component extends React.Component {
 
   state = {
-    authStatus: 'not logged',
+    role: 'not logged',
   }
-  handleChange = e => {
-    this.setState({
-      authStatus: e.target.value,
-    });
+  handleChangeRole = e => {
+    this.setState( {
+      role: e.target.value,
+    } );
   };
 
-  render() {
-
+  render () {
+    const { users } = this.props;
+    const { role } = this.state;
     return (
       <>
         <div>
-          <Button className={styles.link} component={NavLink} exact to={`/`} activeClassName='active'><AssignmentIcon /></Button>
+          <Button className={ styles.link } component={ NavLink } exact to={ `/` } activeClassName='active'><AssignmentIcon /></Button>
         </div>
-        <select value={this.state.authStatus} onChange={this.handleChange}>
-          <option value="logged">logged</option>
-          <option value="not logged">not logged</option>
-          <option value="admin">admin</option>
+        <select value={ this.state.role } onChange={ this.handleChangeRole }>
+          { users.map( user => {
+            return (
+              <option key={ user.id } value={ user.role }>{ user.name }</option>
+            );
+          } ) }
         </select>
-        {this.state.authStatus !== 'not logged'
+        {role !== 'not logged'
           ?
-          <nav className={styles.component}>
-            <Button className={styles.link} component={NavLink} exact to={`/post/add`} activeClassName='active'>Add Post</Button>
-            <Button className={styles.link} component={NavLink} exact to={`/`} activeClassName='active'>Log out</Button>
+          <nav className={ styles.component }>
+            <Button className={ styles.link } component={ NavLink } exact to={ `/post/add` } activeClassName='active'>Add Post</Button>
+            <Button className={ styles.link } component={ NavLink } exact to={ `/` } activeClassName='active'>Log out</Button>
           </nav>
           :
-          <nav className={styles.component}>
-            <Button className={styles.link} href='https://google.com' activeClassName='active'>Log in</Button>
+          <nav className={ styles.component }>
+            <Button className={ styles.link } href='https://google.com' activeClassName='active'>Log in</Button>
           </nav>
         }
       </>
@@ -50,9 +55,17 @@ class Component extends React.Component {
 Component.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
+  users: PropTypes.array,
 };
+const mapStateToProps = state => ( {
+  users: getAllUsers( state ),
+} );
+
+const Container = connect( mapStateToProps )( Component );
 
 export {
-  Component as Header,
+  Container as Header,
   Component as HeaderComponent,
 };
+
+

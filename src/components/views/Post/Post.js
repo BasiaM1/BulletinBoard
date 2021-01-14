@@ -25,9 +25,13 @@ import styles from './Post.module.scss';
 
 class Component extends React.Component {
 
+  state = {
+    id: '3',
+    role: 'not logged',
+
+  }
   render () {
     const { className, post } = this.props;
-
     return (
       <Paper className={ clsx( className, styles.root ) }>
         {post ? (
@@ -70,12 +74,13 @@ class Component extends React.Component {
               </TableContainer>
             </CardContent>
             <CardActions disableSpacing>
-              <Button className={ styles.button }
-                variant="contained"
-                color="primary"
-                component={ Link } to={ `/post/${ post.id }/edit` }>
-                Edit your post
-              </Button>
+              { this.isPermitted() ? (
+                <Button className={ styles.button }
+                  variant="contained"
+                  color="primary"
+                  component={ Link } to={ `/post/${ post.id }/edit` }>
+                  Edit your post
+                </Button> ) : '' }
               <Button className={ styles.button }
                 variant="contained"
                 color="primary"
@@ -83,12 +88,25 @@ class Component extends React.Component {
                 Homepage
               </Button>
             </CardActions>
-          </Card> ) : ( <p>Sorry, there is no post. Go to  <Button className={ styles.button } variant="contained" color="primary" component={ Link } to={ '/' }>
+          </Card> ) : ( <p>Sorry, you are not permitted to edit this post. Go to  <Button className={ styles.button } variant="contained" color="primary" component={ Link } to={ '/' }>
             Homepage</Button> </p> ) }
       </Paper>
     );
   }
+  isPermitted () {
+    const { post } = this.props;
+    const { role, id } = this.state;
+
+    if ( post.userId === id || role === 'admin' ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
+
+
+
 Component.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,

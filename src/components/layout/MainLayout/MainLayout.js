@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Header} from '../Header/Header';
+import { Header } from '../Header/Header';
 import clsx from 'clsx';
 
 import AppBar from '@material-ui/core/AppBar';
@@ -9,8 +9,8 @@ import Container from '@material-ui/core/Container';
 
 import styles from './MainLayout.module.scss';
 
-const Component = ({className, children}) => (
-  <div className={clsx(className, styles.root)}>
+const Component = ( { className, children } ) => (
+  <div className={ clsx( className, styles.root ) }>
     < AppBar>
       <Container maxWidth='lg'>
         <Toolbar disableGutters>
@@ -21,7 +21,7 @@ const Component = ({className, children}) => (
     <Container maxWidth='lg'>
       <Toolbar />
       <Toolbar />
-      {children}
+      { children }
     </Container>
   </div>
 );

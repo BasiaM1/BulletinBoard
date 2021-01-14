@@ -11,6 +11,7 @@ export const initialState = {
       price: 24,
       phone: 345876987,
       location: 'Warsaw',
+      userId: '2',
     },
     {
       id: '2',
@@ -23,6 +24,7 @@ export const initialState = {
       price: 28,
       phone: 521876987,
       location: 'Warsaw',
+      userId: '4',
     },
     {
       id: '3',
@@ -35,10 +37,41 @@ export const initialState = {
       price: 132,
       phone: 724876987,
       location: 'Krakow',
+      userId: '4',
+
     } ],
+
     loading: {
       active: false,
       error: false,
     },
   },
+  users: [
+    {
+      id: '1',
+      name: 'admin',
+      role: 'admin',
+      active: true,
+    },
+    {
+      id: '2',
+      name: 'logged user1',
+      role: 'logged',
+      active: true,
+    },
+
+    {
+      id: '3',
+      name: 'not logged user',
+      role: 'not logged',
+      active: false,
+    },
+    {
+      id: '4',
+      name: 'logged user2',
+      role: 'logged',
+      active: true,
+    },
+  ],
+
 };
