@@ -1,4 +1,5 @@
 /* selectors */
+
 export const getAllUsers = ( { users } ) => users.data;
 export const getActive = ( { users } ) => users.active;
 export const getRole = ( { users } ) => users.role;

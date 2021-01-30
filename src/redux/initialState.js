@@ -46,8 +46,8 @@ export const initialState = {
       error: false,
     },
   },
-  users: [
-    {
+  users: {
+    data: [ {
       id: '1',
       name: 'admin',
       role: 'admin',
@@ -72,6 +72,6 @@ export const initialState = {
       role: 'logged',
       active: true,
     },
-  ],
-
+    ],
+  },
 };

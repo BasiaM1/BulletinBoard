@@ -7,36 +7,42 @@ import { getAllUsers } from '../../../redux/usersRedux';
 import { NavLink } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 import styles from './Header.module.scss';
 
 class Component extends React.Component {
 
   state = {
-    role: 'not logged',
+    userData: { ...this.props.user },
   }
   handleChangeRole = e => {
+    const { userData } = this.state;
+    const { value } = e.target;
     this.setState( {
-      role: e.target.value,
+      userData: {
+        ...userData,
+        role: value,
+      },
     } );
   };
 
   render () {
     const { users } = this.props;
-    const { role } = this.state;
+    const { userData } = this.state;
     return (
       <>
         <div>
           <Button className={ styles.link } component={ NavLink } exact to={ `/` } activeClassName='active'><AssignmentIcon /></Button>
         </div>
-        <select value={ this.state.role } onChange={ this.handleChangeRole }>
+        <Select labelId="role" id="role" value={ userData.role } onChange={ this.handleChangeRole } label="user">
           { users.map( user => {
             return (
-              <option key={ user.id } value={ user.role }>{ user.name }</option>
+              <MenuItem key={ user.id } value={ user.role }>{ user.name }</MenuItem>
             );
           } ) }
-        </select>
-        {role !== 'not logged'
+        </Select>
+        {userData.role !== 'not logged'
           ?
           <nav className={ styles.component }>
             <Button className={ styles.link } component={ NavLink } exact to={ `/post/add` } activeClassName='active'>Add Post</Button>
@@ -56,6 +62,7 @@ Component.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
   users: PropTypes.array,
+  user: PropTypes.object,
 };
 const mapStateToProps = state => ( {
   users: getAllUsers( state ),

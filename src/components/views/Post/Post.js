@@ -26,10 +26,10 @@ import styles from './Post.module.scss';
 class Component extends React.Component {
 
   state = {
-    id: '3',
-    role: 'not logged',
-
+    userData: { ...this.props.user },
   }
+
+
   render () {
     const { className, post } = this.props;
     return (
@@ -95,9 +95,9 @@ class Component extends React.Component {
   }
   isPermitted () {
     const { post } = this.props;
-    const { role, id } = this.state;
+    const { userData, id } = this.state;
 
-    if ( post.userId === id || role === 'admin' ) {
+    if ( post.userId === id || userData.role === 'admin' ) {
       return true;
     } else {
       return false;
@@ -111,6 +111,7 @@ Component.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
   post: PropTypes.object,
+  user: PropTypes.object,
 };
 
 const mapStateToProps = ( state, props ) => ( {
